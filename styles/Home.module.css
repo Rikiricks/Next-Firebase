@@ -1,4 +1,4 @@
-.container {
+/* .container {
   min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
@@ -118,4 +118,16 @@
     width: 100%;
     flex-direction: column;
   }
+} */
+
+/* .navbar-nav a { cursor: pointer; }
+
+.app-container {
+    min-height: 350px;
 }
+
+.btn-delete-user {
+    width: 40px;
+    text-align: center;
+    box-sizing: content-box;
+} */
