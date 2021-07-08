@@ -70,8 +70,8 @@ const formStatusProps: IFormStatusProps = {
     },
 }
  
-const AddEdit: React.FC<IUser> = (props) => {
-    const user = props?.data;
+const AddEdit: React.FC<IUser> = (props:any) => {
+    const user = props?.user;
     const isAddMode = !user;
     const router = useRouter();
     const fbService = new firebaseService('User');

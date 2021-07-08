@@ -48,6 +48,27 @@ export class firebaseService {
     })  
   });
 
+  getById = (id: any) => new Promise<any>((resolve,reject)=>{
+    dbRef.child(`${this.name}/${id}`).once('value', snapshot => {  
+      if (snapshot.val() != null) {  
+        debugger;
+        let items = snapshot.val();
+       
+        // let newState = [];
+        // for (let item in items) {
+        //   newState.push({
+        //     id:item,
+        //     data:items[item]
+        //   });
+        // }
+      resolve(items);
+          
+      }  else{
+        resolve([]);
+      }
+  })  
+});
+
     
 
   create = (entity: any)=>{
@@ -77,8 +98,5 @@ export class firebaseService {
       }) 
   }
   
-   deleteall = (name)=>{
-    
-  }
 }
 

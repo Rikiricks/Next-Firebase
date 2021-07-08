@@ -34,15 +34,15 @@ return(
                     <td>{user.data.name}</td>
                     <td>{user.data.email}</td>
                     <td>{user.data.phone}</td>
-                    {/* <td style={{ whiteSpace: 'nowrap' }}>
-                        <Link href={`/users/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
-                        <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger btn-delete-user" disabled={user.isDeleting}>
+                    <td style={{ whiteSpace: 'nowrap' }}>
+                        <NavLink href={`/User/Edit/${user.id}`}><a className="btn btn-sm btn-primary mr-1">Edit</a></NavLink>
+                        {/* <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger btn-delete-user" disabled={user.isDeleting}>
                             {user.isDeleting 
                                 ? <span className="spinner-border spinner-border-sm"></span>
                                 : <span>Delete</span>
                             }
-                        </button>
-                    </td> */}
+                        </button> */}
+                    </td>
                 </tr>
             )}
             {!users &&
@@ -74,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         await fbService.getAll().then((value:any) =>{
             
             users = value as IUser[];
-            console.log(JSON.stringify(users));
+            // console.log(JSON.stringify(users));
         })
         
      
