@@ -1,7 +1,7 @@
 import { GetServerSideProps, GetStaticProps,GetStaticPaths } from "next";
 import { IUser } from "../../../model/User";
 import {firebaseService} from '../../../services/firebase.service';
-import {AddEdit} from "../AddOrEdit"
+import AddEdit from "../AddOrEdit"
 import { ParsedUrlQuery } from 'querystring'
 
 interface IParams extends ParsedUrlQuery {

@@ -8,7 +8,7 @@ type MyState = {
     count: number
 }
 var fbService: any;
- export class User extends React.Component<MyProps, MyState>{
+ export default class User extends React.Component<MyProps, MyState>{
     constructor(props: MyProps) {
         super(props);
         

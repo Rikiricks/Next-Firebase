@@ -1,3 +1,3 @@
-import { AddEdit } from './AddOrEdit';
+import AddEdit from './AddOrEdit';
 
 export default AddEdit;

@@ -17,7 +17,7 @@ import {firebaseService} from '../../services'
 import { useRouter } from 'next/router';
 
 
-export { AddEdit };
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -293,3 +293,5 @@ const AddEdit: React.FC<IUser> = (props:any) => {
         
     );
 }
+
+export default AddEdit;
