@@ -1,11 +1,11 @@
 import { GetServerSideProps, GetStaticProps,GetStaticPaths } from "next";
-import { IUser } from "../../../model/User";
+import { IData, IUser } from "../../../model/User";
 import {firebaseService} from '../../../services/firebase.service';
 import AddEdit from "../AddOrEdit"
 import { ParsedUrlQuery } from 'querystring'
 
 interface IParams extends ParsedUrlQuery {
-    slug: string
+    id: string
 }
 
 
@@ -35,11 +35,11 @@ export const  getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as IParams
   await firebase.getById(id).then((value:any) =>{
       debugger;
-        user = value;
+        user = value as IData;
   });
 
    return {
-    props: { user }
+    props: {user, id}
     }
 }
 

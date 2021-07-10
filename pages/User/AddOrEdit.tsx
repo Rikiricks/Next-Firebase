@@ -9,9 +9,11 @@ import {
 } from '@material-ui/core'
 import { Formik, Form, FormikProps } from 'formik'
 import * as Yup from 'yup'
+import Router from 'next/router'
 
 
 import { IUser } from '../../model/User';
+import {IData} from '../../model/User';
 import { NavLink } from '../../components/NavLink';
 import {firebaseService} from '../../services'
 import { useRouter } from 'next/router';
@@ -71,7 +73,10 @@ const formStatusProps: IFormStatusProps = {
 }
  
 const AddEdit: React.FC<IUser> = (props:any) => {
-    const user = props?.user;
+    console.log(JSON.stringify(props.user));
+    console.log(props.id);
+    const user = props.user;
+  
     const isAddMode = !user;
     const router = useRouter();
     const fbService = new firebaseService('User');
@@ -83,16 +88,30 @@ const AddEdit: React.FC<IUser> = (props:any) => {
         type: '',
     })
 
-    const createNewUser = async (data: ISignUpForm, resetForm: Function) => {
+    let initialValues = {
+       
+            name: user.name || '',
+             email: user.email || '',
+              phone: user.phone || ''
+        };
+
+        
+
+    const createNewUser = async (data: IData, resetForm: Function) => {
         try {
             // API call integration will be here. Handle success / error response accordingly.
-            if (data) {
-                debugger;
-                setFormStatus(formStatusProps.success)
-                resetForm({})
+            if (data) {               
                
-                
-                fbService.create(data);
+               
+                if(!isAddMode){
+                    fbService.update(data,props.id);
+                }else{
+                    fbService.create(data);
+
+                }
+                setFormStatus(formStatusProps.success);
+                resetForm({});
+                Router.push("/User");
 
             }
         } catch (error) {
@@ -101,12 +120,12 @@ const AddEdit: React.FC<IUser> = (props:any) => {
                 response.data === 'user already exist' &&
                 response.status === 400
             ) {
-                setFormStatus(formStatusProps.duplicate)
+                setFormStatus(formStatusProps.duplicate);
             } else {
-                setFormStatus(formStatusProps.error)
+                setFormStatus(formStatusProps.error);
             }
         } finally {
-            setDisplayFormStatus(true)
+            setDisplayFormStatus(true);
         }
     }
 
@@ -114,16 +133,11 @@ const AddEdit: React.FC<IUser> = (props:any) => {
         <>
         <div className={classes.root}>
         <Formik
+          enableReinitialize={true}
+           initialValues={initialValues}
 
-           initialValues={{
-            name: '',
-            email:'',
-            phone: ''
-           }}
-
-            onSubmit={(values: ISignUpForm, actions) => {
-                debugger;
-               
+            onSubmit={(values: IData, actions) => {
+                               
                 createNewUser(values, actions.resetForm)
                
                 setTimeout(() => {
@@ -141,15 +155,16 @@ const AddEdit: React.FC<IUser> = (props:any) => {
             })}
         
         >
-            {(props: FormikProps<ISignUpForm>) => {
-                    const {
-                        values,
+            {(props: FormikProps<IData>) => {
+                    const { 
+                        values,                       
                         touched,
                         errors,
                         handleBlur,
                         handleChange,
                         isSubmitting,
-                    } = props
+                    } = props;
+                    console.log(JSON.stringify(values));
                     return (
                         <Form>
                             <h1 className={classes.title}>User</h1>
@@ -202,8 +217,8 @@ const AddEdit: React.FC<IUser> = (props:any) => {
                                         type="text"
                                         helperText={
                                             errors.phone && touched.phone
-                                                ? 'Please valid phone. One uppercase, one lowercase, one special character and no spaces'
-                                                : 'One uppercase, one lowercase, one special character and no spaces'
+                                                ? 'Please valid phone'
+                                                : 'Please enter phone'
                                         }
                                         error={
                                             errors.phone && touched.phone

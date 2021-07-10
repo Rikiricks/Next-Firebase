@@ -54,7 +54,8 @@ export class firebaseService {
         debugger;
         let items = snapshot.val();
        
-        // let newState = [];
+         let state = { id: id, data: items};
+         console.log(JSON.stringify(state));
         // for (let item in items) {
         //   newState.push({
         //     id:item,
@@ -80,7 +81,7 @@ export class firebaseService {
       })
   }
   
-  update = (entity: any, id:number)=>{
+  update = (entity: any, id:any)=>{
     dbRef.child(`${this.name}/${id}`).set(  
       entity,  
       err => {  
@@ -90,7 +91,7 @@ export class firebaseService {
     
   }
   
-   delete = (id: number)=>{
+   delete = (id: any)=>{
     dbRef.child(`${this.name}/${id}`).remove(  
       err => {  
           if (err)  
